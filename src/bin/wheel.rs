@@ -5,20 +5,24 @@ use zenoh::{
 
 use async_std;
 use zenoh_interface::{CmdVel, motor_controll::QuadMotor};
-
+use zenoh_manage_utils::param::get_str_param;
 
 #[async_std::main]
 async fn main()
 {
     let session = zenoh::open(Config::default()).res().await.unwrap();
 
-    let sub_topic = "cmd_vel".to_string();
-    let pub_topic = "wheel_command".to_string();
+    let yaml_path = &std::env::args().nth(1).unwrap();
+
+    let sub_topic = get_str_param(yaml_path, "wheel", "sub_topic", "/cmd_vel".to_string());
+    let pub_topic = get_str_param(yaml_path, "wheel", "pub_topic", "/output".to_string());
 
     let subscriber = session.declare_subscriber(&sub_topic).res().await.unwrap();
     let publisher = session.declare_publisher(&pub_topic).res().await.unwrap();
 
     let diagonal = ((2.0_f32).sqrt() / 2.0) as f32;
+
+
 
 
     loop {
