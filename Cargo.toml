@@ -8,6 +8,7 @@ edition = "2021"
 [dependencies]
 zenoh = "0.7.0-rc"
 zenoh_interface = {git = "https://github.com/PureRustRobot/zenoh_interface"}
+zenoh_manage_utils = {git = "https://github.com/PureRustRobot/zenoh_manage_utils"}
 
 serde = "1.0"
 serde_json = "1.0"
