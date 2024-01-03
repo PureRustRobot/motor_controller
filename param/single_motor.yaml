@@ -1,0 +1,5 @@
+zenoh_params:
+  single_motor:
+    sub_topic: "cmd_vel"
+    pub_topic: "wheel_command"
+    reversal: false
