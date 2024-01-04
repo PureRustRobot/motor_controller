@@ -8,12 +8,12 @@ use zenoh_interface::{CmdVel, motor_controll::{QuadMotor, SingleMotor}};
 use zenoh_manage_utils::param::{get_str_param, get_bool_param};
 
 
-pub async fn wheel_converter(yaml_path:&str)->Result<(), Error>
+pub async fn wheel_converter(node_name:&str, yaml_path:&str)->Result<(), Error>
 {
     let session = zenoh::open(Config::default()).res().await.unwrap();
 
-    let sub_topic = get_str_param(yaml_path, "wheel", "sub_topic", "cmd_vel".to_string());
-    let pub_topic = get_str_param(yaml_path, "wheel", "pub_topic", "output".to_string());
+    let sub_topic = get_str_param(yaml_path, node_name, "sub_topic", "cmd_vel".to_string());
+    let pub_topic = get_str_param(yaml_path, node_name, "pub_topic", "output".to_string());
 
     let subscriber = session.declare_subscriber(&sub_topic).res().await.unwrap();
     let publisher = session.declare_publisher(&pub_topic).res().await.unwrap();
