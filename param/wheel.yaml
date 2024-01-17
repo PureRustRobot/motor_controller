@@ -1,4 +1,0 @@
-zenoh_params:
-  wheel:
-    sub_topic: "cmd_vel"
-    pub_topic: "wheel_command"
