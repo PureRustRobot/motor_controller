@@ -5,7 +5,6 @@ use zenoh::{
 };
 
 use prr_msgs::msg::*;
-use zenoh_manage_utils::param::{get_str_param, get_bool_param};
 use zenoh_manage_utils::logger;
 
 
