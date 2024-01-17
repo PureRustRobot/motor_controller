@@ -17,8 +17,8 @@ pub async fn cmd_vel_to_wheel(
 {
     let session = zenoh::open(Config::default()).res().await.unwrap();
 
-    let subscriber = session.declare_subscriber(&sub_topic).res().await.unwrap();
-    let publisher = session.declare_publisher(&pub_topic).res().await.unwrap();
+    let subscriber = session.declare_subscriber(sub_topic).res().await.unwrap();
+    let publisher = session.declare_publisher(pub_topic).res().await.unwrap();
 
     let diagonal = ((2.0_f32).sqrt() / 2.0) as f32;
 
@@ -63,8 +63,8 @@ pub async fn single_motor_to_single_motor(
 {
     let session = zenoh::open(Config::default()).res().await.unwrap();
 
-    let subscriber = session.declare_subscriber(&sub_topic).res().await.unwrap();
-    let publisher = session.declare_publisher(&pub_topic).res().await.unwrap();
+    let subscriber = session.declare_subscriber(sub_topic).res().await.unwrap();
+    let publisher = session.declare_publisher(pub_topic).res().await.unwrap();
 
     let msg = format!("Start sub:{}, pub:{}", subscriber.key_expr().to_string(), publisher.key_expr().to_string());
     logger::log_info(node_name, msg);
