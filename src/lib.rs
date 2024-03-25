@@ -5,7 +5,7 @@ use zenoh::{
 };
 
 use prr_msgs::msg::*;
-use zenoh_manage_utils::logger;
+use prr_utils::logger;
 
 
 pub async fn cmd_vel_to_wheel(
@@ -29,7 +29,7 @@ pub async fn cmd_vel_to_wheel(
     loop {
         let sample = subscriber.recv_async().await.unwrap();
 
-        let get_data = deserialize_cmdvel(sample.value.to_string());
+        let get_data = CmdVel::deserialize(sample.value.to_string());
 
         let mut wheel_cmd = Wheel{
             front_left:get_data.x*diagonal - get_data.y*diagonal + get_data.rotation_power,
@@ -43,7 +43,7 @@ pub async fn cmd_vel_to_wheel(
         wheel_cmd.rear_left = wheel_cmd.rear_left * speed_rate;
         wheel_cmd.rear_right = wheel_cmd.rear_right * speed_rate;
 
-        let serialized = serialize_wheel(&wheel_cmd);
+        let serialized = Wheel::serialize(&wheel_cmd);
 
         let log_data = format!("send :{}", serialized);
 
@@ -72,7 +72,7 @@ pub async fn single_motor_to_single_motor(
     loop {
         let sample = subscriber.recv_async().await.unwrap();
 
-        let mut get_data = deserialize_singlemotor(sample.value.to_string());
+        let mut get_data = Motor::deserialize(sample.value.to_string());
 
         get_data.power = get_data.power * speed_rate;
 
@@ -81,6 +81,6 @@ pub async fn single_motor_to_single_motor(
             get_data.power = get_data.power * -1.0;
         }
 
-        publisher.put(serialize_singlemotor(&get_data)).res().await.unwrap();
+        publisher.put(Motor::serialize(&get_data)).res().await.unwrap();
     }
 }
