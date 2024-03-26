@@ -13,6 +13,7 @@ pub async fn cmd_vel_to_wheel(
     sub_topic:&str,
     pub_topic:&str,
     speed_rate:f32,
+    enable_debug:bool,
 )->Result<(), Error>
 {
     let session = zenoh::open(Config::default()).res().await.unwrap();
@@ -47,7 +48,10 @@ pub async fn cmd_vel_to_wheel(
 
         let log_data = format!("send :{}", serialized);
 
-        logger::log_info(node_name, log_data);
+        if enable_debug
+        {
+            logger::log_info(node_name, log_data);
+        }
 
         publisher.put(serialized).res().await.unwrap();
     }
