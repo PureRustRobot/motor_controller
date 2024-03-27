@@ -35,8 +35,8 @@ pub async fn cmd_vel_to_wheel(
         let mut wheel_cmd = Wheel{
             front_left:get_data.x*diagonal - get_data.y*diagonal + 0.5 * get_data.rotation_power,
             front_right:-get_data.x*diagonal - get_data.y*diagonal + 0.5 * get_data.rotation_power,
-            rear_left:-get_data.x*diagonal + get_data.y*diagonal + 0.5 * get_data.rotation_power,
-            rear_right:get_data.x*diagonal + get_data.y*diagonal + 0.5 * get_data.rotation_power,
+            rear_left:get_data.x*diagonal + get_data.y*diagonal + 0.5 * get_data.rotation_power,
+            rear_right:-get_data.x*diagonal + get_data.y*diagonal + 0.5 * get_data.rotation_power,
         };
 
         wheel_cmd.front_left = wheel_cmd.front_left * speed_rate;
